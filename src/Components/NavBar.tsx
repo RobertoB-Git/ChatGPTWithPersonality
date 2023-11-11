@@ -2,4 +2,4 @@ const Navbar = () => {
   return <>test</>;
 };
 
-export default Navbar
+export default Navbar;
