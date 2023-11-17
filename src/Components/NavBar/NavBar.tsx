@@ -10,7 +10,7 @@ const Navbar = () => {
     <NavbarContainer>
       <FlexDiv>
         <Link href={"/Login"}>Log in</Link>
-        <Link href={"/Register"}>Sign up</Link>
+        <Link href={"/"}>Sign up</Link>
       </FlexDiv>
 
       <FlexDiv>
