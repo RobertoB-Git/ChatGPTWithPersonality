@@ -37,6 +37,12 @@ const BannerTitle = styled.h1`
   font-size: xx-large;
 `;
 const BannerInfo = styled.p``;
+const BannerButton = styled(Button)`
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+`;
 
 const Banner = () => {
   return (
@@ -46,7 +52,7 @@ const Banner = () => {
         <BannerTitle>Latest Celev</BannerTitle>
         <BannerInfo>Chat with our latest addition to our roster</BannerInfo>
       </BannerInfoContainer>
-      <Button>Chat</Button>
+      <BannerButton>Chat</BannerButton>
     </BannerContainer>
   );
 };

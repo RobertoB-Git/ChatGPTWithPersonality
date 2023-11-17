@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <NavbarContainer>
       <FlexDiv>
-        <Link href={"/"}>Log in</Link>
+        <Link href={"/Login"}>Log in</Link>
         <Link href={"/"}>Sign up</Link>
       </FlexDiv>
 
