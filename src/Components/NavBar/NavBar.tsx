@@ -17,8 +17,9 @@ const Navbar = () => {
         <Image src={Lupa} alt="Search" />
         <SearchBar />
       </FlexDiv>
-
-      <NavBarIcon src={Icon.src}></NavBarIcon>
+      <Link href={"/"}>
+        <NavBarIcon src={Icon.src}></NavBarIcon>
+      </Link>
     </NavbarContainer>
   );
 };
