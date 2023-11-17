@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const FooterContainer = styled.footer`
-  position: fixed;
+  /* position: fixed; */
   width: 100%;
   bottom: 0;
   background-color: black;
