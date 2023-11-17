@@ -1,12 +1,11 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Head from 'next/head'
-
-const inter = Inter({ subsets: ['latin'] })
+import Banner from "@/Components/Banner";
+import CelebList from "@/Components/CelebList/CelebList";
 
 export default function Home() {
   return (
     <>
+    <Banner></Banner>
+    <CelebList></CelebList>
     </>
   )
 }
