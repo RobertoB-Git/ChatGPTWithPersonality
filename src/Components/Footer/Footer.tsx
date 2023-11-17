@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
-  console.log(Twitter);
+
   return (
     <FooterContainer>
       <FooterLinksContainer>
