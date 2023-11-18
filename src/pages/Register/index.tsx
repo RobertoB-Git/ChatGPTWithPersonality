@@ -20,8 +20,8 @@ const Register = () => {
     password: "",
   });
 
-  const context = useContext(AppContext)
-  console.log(context.user);
+  const app = useContext(AppContext)
+  console.log(app.user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccountInfo((prev) => ({ ...prev, [e.target.type]: e.target.value }));
@@ -35,7 +35,7 @@ const Register = () => {
       );
 
       localStorage.setItem("authToken", response.data.authToken);
-
+      app.authUserWithToken(response.data.authToken);
       console.log(response.data);
     } catch (error) {
       console.log(error);
