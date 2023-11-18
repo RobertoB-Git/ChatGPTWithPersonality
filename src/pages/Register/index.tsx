@@ -5,7 +5,9 @@ import {
   AccountInput,
   AccountInputTitle,
 } from "../Login/AccountStyles";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import axios from "axios";
+import { AppContext } from "@/Components/AppContext";
 
 interface Account {
   email: string;
@@ -17,12 +19,27 @@ const Register = () => {
     email: "",
     password: "",
   });
+
+  const context = useContext(AppContext)
+  console.log(context.user);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccountInfo((prev) => ({ ...prev, [e.target.type]: e.target.value }));
   };
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("test");
+    try {
+      const response = await axios.post(
+        "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/auth/signup",
+        { email: accountInfo.email, password: accountInfo.password }
+      );
+
+      localStorage.setItem("authToken", response.data.authToken);
+
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <AccountContainer>
