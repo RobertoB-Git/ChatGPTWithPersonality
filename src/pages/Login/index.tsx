@@ -6,6 +6,7 @@ import {
   AccountInputTitle,
 } from "./AccountStyles";
 import { useState } from "react";
+import axios from "axios";
 
 interface Account {
   email: string;
@@ -20,9 +21,21 @@ const LogIn = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccountInfo((prev) => ({ ...prev, [e.target.type]: e.target.value }));
   };
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("test");
+    try {
+        const response = await axios.post(
+          "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/auth/login",
+          { email: accountInfo.email, password: accountInfo.password }
+        );
+  
+        localStorage.setItem("authToken", response.data.authToken);
+  
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    
   };
   return (
     <AccountContainer>
