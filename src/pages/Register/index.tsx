@@ -8,6 +8,7 @@ import {
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AppContext } from "@/Components/AppContext";
+import { useRouter } from "next/navigation";
 
 interface Account {
   email: string;
@@ -20,7 +21,8 @@ const Register = () => {
     password: "",
   });
 
-  const app = useContext(AppContext)
+  const router = useRouter();
+  const app = useContext(AppContext);
   console.log(app.user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,9 @@ const Register = () => {
 
       localStorage.setItem("authToken", response.data.authToken);
       app.authUserWithToken(response.data.authToken);
+
       console.log(response.data);
+      router.push("/");
     } catch (error) {
       console.log(error);
     }

@@ -8,7 +8,7 @@ import {
 import { useContext, useState } from "react";
 import axios from "axios";
 import { AppContext } from "@/Components/AppContext";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface Account {
   email: string;
@@ -21,6 +21,7 @@ const LogIn = () => {
     password: "",
   });
 
+  const router = useRouter()
   const app = useContext(AppContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,10 +41,12 @@ const LogIn = () => {
       app.authUserWithToken(response.data.authToken);
 
       console.log(response.data);
+      router.push("/")
+
     } catch (error) {
       console.log(error);
     }
-
+    
     // redirect("/register");
   };
   

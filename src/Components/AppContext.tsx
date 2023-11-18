@@ -9,7 +9,6 @@ interface User {
 
 interface Context {
   user: User | null;
-  // setUser?: Dispatch<SetStateAction<string>>
   authToken?: string | null;
   logOut: () => void;
   authUserWithToken: (token: string) => void;

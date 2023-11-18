@@ -4,7 +4,7 @@ import { useState } from "react";
 const SearchInput = styled.input`
   color: black;
   background-color: lightgray;
-  width: 50vb;
+  width: 40vw;
   text-align: center;
   font-weight: 600;
 `;
