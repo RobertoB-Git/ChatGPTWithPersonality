@@ -28,6 +28,7 @@ export const Celeb = styled.div`
 export const CelebImg = styled.img`
   height: 100%;
   width: 100%;
+  object-fit: cover;
 `;
 
 export const CelebName = styled.h4`
