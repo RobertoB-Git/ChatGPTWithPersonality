@@ -23,9 +23,9 @@ const CelebList = ({ list }: { list: List }) => {
       <CelebContent>
         {list.map((celeb) => {
           return (
-            <Link href={"/"}>
+            <Link href={"/"} key={celeb.Name}>
               
-              <Celeb key={celeb.Name}>
+              <Celeb>
               <CelebImg src={celeb.Image}></CelebImg>
                 <CelebName>{celeb.Name} </CelebName>
               </Celeb>
