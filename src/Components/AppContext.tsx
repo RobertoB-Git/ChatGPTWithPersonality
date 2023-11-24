@@ -16,7 +16,7 @@ interface Context {
 
 export const AppContext = createContext<Context>({
   user: null,
-  logOut() {},
+  logOut: () => {},
   authUserWithToken() {}, // melhor forma de fazer isto
 });
 

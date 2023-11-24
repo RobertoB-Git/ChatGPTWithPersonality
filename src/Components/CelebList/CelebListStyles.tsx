@@ -25,6 +25,10 @@ export const Celeb = styled.div`
   background-color: grey;
 
 `;
+export const CelebImg = styled.img`
+  height: 100%;
+  width: 100%;
+`;
 
 export const CelebName = styled.h4`
   color: white;
@@ -32,4 +36,5 @@ export const CelebName = styled.h4`
   bottom: 1vh;
   left: 50%;
   transform: translateX(-50%);
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 `;

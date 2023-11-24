@@ -4,31 +4,34 @@ import {
   CelebContainer,
   CelebContent,
   CelebHeader,
+  CelebImg,
   CelebName,
 } from "./CelebListStyles";
 
-const CelebList = () => {
+interface Celeb {
+  id: number;
+  Name: string;
+  Image: string;
+}
+
+type List = Celeb[];
+
+const CelebList = ({ list }: { list: List }) => {
   return (
     <CelebContainer>
       <CelebHeader>Celebrety List</CelebHeader>
       <CelebContent>
-        <Link href={"/"}>
-          <Celeb>
-            <CelebName>Name</CelebName>
-          </Celeb>
-        </Link>
-        <Celeb>
-          <CelebName>Name</CelebName>
-        </Celeb>
-        <Celeb>
-          <CelebName>Name</CelebName>
-        </Celeb>
-        <Celeb>
-          <CelebName>Name</CelebName>
-        </Celeb>
-        <Celeb>
-          <CelebName>Name</CelebName>
-        </Celeb>
+        {list.map((celeb) => {
+          return (
+            <Link href={"/"}>
+              
+              <Celeb>
+              <CelebImg src={celeb.Image}></CelebImg>
+                <CelebName>{celeb.Name} </CelebName>
+              </Celeb>
+            </Link>
+          );
+        })}
       </CelebContent>
     </CelebContainer>
   );
