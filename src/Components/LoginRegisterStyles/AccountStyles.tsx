@@ -25,9 +25,3 @@ export const AccountInputTitle = styled.h4`
   font-weight: bold;
   font-size: x-large;
 `;
-
-const Comp = () => {
-  return <></>
-}
-
-export default Comp

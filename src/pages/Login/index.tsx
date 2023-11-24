@@ -4,7 +4,7 @@ import {
   AccountForm,
   AccountInput,
   AccountInputTitle,
-} from "./AccountStyles";
+} from "../../Components/LoginRegisterStyles/AccountStyles";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { AppContext } from "@/Components/AppContext";
@@ -21,7 +21,7 @@ const LogIn = () => {
     password: "",
   });
 
-  const router = useRouter()
+  const router = useRouter();
   const app = useContext(AppContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,15 +41,14 @@ const LogIn = () => {
       app.authUserWithToken(response.data.authToken);
 
       console.log(response.data);
-      router.push("/")
-
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
-    
+
     // redirect("/register");
   };
-  
+
   return (
     <AccountContainer>
       <AccountForm onSubmit={submit}>
