@@ -4,7 +4,7 @@ import {
   AccountForm,
   AccountInput,
   AccountInputTitle,
-} from "../../Components/LoginRegisterStyles/AccountStyles";
+} from "../Components/LoginRegisterStyles/AccountStyles";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { AppContext } from "@/Components/AppContext";
