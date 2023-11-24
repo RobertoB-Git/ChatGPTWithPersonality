@@ -38,7 +38,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logOut = () => {
-    localStorage.clear();
+    // localStorage.clear();
     setUser(null);
   };
 
