@@ -23,7 +23,7 @@ const CelebList = ({ list }: { list: List }) => {
       <CelebContent>
         {list.map((celeb) => {
           return (
-            <Link href={"/"} key={celeb.Name}>
+            <Link href={"/chat/"+celeb.Name} key={celeb.Name}>
               
               <Celeb>
               <CelebImg src={celeb.Image}></CelebImg>
