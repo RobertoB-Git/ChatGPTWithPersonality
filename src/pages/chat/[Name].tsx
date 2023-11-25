@@ -12,12 +12,20 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+interface Celeb {
+    id: number;
+    Name: string;
+    Image: string;
+  }
+  
+type List = Celeb[];
+
 const Chat = () => {
   const router = useRouter();
   console.log(router.query.Name);
   const [input, setInput] = useState('');
-  const [celeb, setCeleb] = useState({});
-  const [celebList, setCelebList] = useState([]);
+  const [celeb, setCeleb] = useState<Celeb>();
+  const [celebList, setCelebList] = useState<List>([]);
 
   useEffect(() => {
     const getCeleb = async () => {
