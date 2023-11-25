@@ -1,6 +1,15 @@
 import styled, { StyledComponent } from "@emotion/styled";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
+
+interface ButtonProps {
+  sideButton: boolean
+}
+interface ChatMessages {
+  gpt: boolean
+}
+
+
 export const ChatContainer = styled.div`
   display: grid;
   grid-template-columns: minmax(205px,20rem) minmax(30rem,100%);
@@ -17,7 +26,7 @@ export const ChatContainer = styled.div`
   }
 `;
 
-export const SideBar = styled.div`
+export const SideBar = styled.div<ButtonProps>`
   display: flex;
   background-color: #c7c7c7;
   flex-direction: column;
@@ -40,7 +49,8 @@ export const SideBar = styled.div`
 
 `;
 
-export const SideButton = styled.button`
+
+export const SideButton = styled.button<ButtonProps>`
   position: fixed;
   left: ${(props)=> (props.sideButton ? 0 : '20rem')};
   width: 1rem;
@@ -102,9 +112,9 @@ export const ChatMessagesContainer = styled.div`
   /* max-width: */
   /* height: calc(100vh ); */
 `;
-export const ChatMessages = styled.div`
+export const ChatMessages = styled.div<ChatMessages>`
   text-align: ${(props) => (props.gpt ? "left" : "right")};
-  background-color: #939393;
+  background-color:  ${(props) => (props.gpt ? "#939393" : "#c5c5c5")};
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -131,8 +141,8 @@ export const Text = styled.p`
 `;
 
 export const ChatInput = styled.input`
-  background-color: #010139;
-  color: white;
+  background-color: #f2f2f2;
+  /* color: white; */
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding-left: 1rem;
@@ -144,6 +154,7 @@ export const ChatInput = styled.input`
   width: 70%;
   height: 2rem;
   bottom: 0;
+  
 
  
 `;

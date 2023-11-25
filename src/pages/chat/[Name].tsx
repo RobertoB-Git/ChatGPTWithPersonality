@@ -10,7 +10,6 @@ import {
   SideBarTitle,
   DefaultImg,
   Text,
-  SideBarContainer,
   SideButton,
 } from "@/Components/chatPage/ChatPageStyles";
 import axios from "axios";
@@ -59,7 +58,7 @@ const Chat = () => {
       message: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
     },
   ]);
-  const [sideButton, setSideButton] = useState(false);
+  const [sideButton, setSideButton] = useState(true);
 
 
   useEffect(() => {
@@ -78,7 +77,7 @@ const Chat = () => {
         console.log(allCelebList.data);
         setCelebList(allCelebList.data);
       } catch (error) {
-        console.log(error.message);
+        console.log(error);
       }
     };
 
@@ -113,16 +112,16 @@ const Chat = () => {
           {chatMessages.map((chat) => {
             if (chat.role == "gpt") {
               return (
-                <ChatMessages gpt>
+                <ChatMessages gpt={true}>
                   <SmallImg src={celeb?.Image} /> 
                   <Text>{chat.message}</Text>
                 </ChatMessages>
               );
             }
-            return <ChatMessages> <Text>{chat.message}</Text> <DefaultImg><Image objectFit="cover" alt="avatar" src={avatar} /> </DefaultImg></ChatMessages>;
+            return <ChatMessages gpt={false}> <Text>{chat.message}</Text> <DefaultImg><Image objectFit="cover" alt="avatar" src={avatar} /> </DefaultImg></ChatMessages>;
           })}
         </ChatMessagesContainer>
-        <ChatInput value={input} onChange={handleChange}></ChatInput>
+        <ChatInput placeholder={"insert Message"} value={input} onChange={handleChange}></ChatInput>
       </ChatBox>
     </ChatContainer>
   );
