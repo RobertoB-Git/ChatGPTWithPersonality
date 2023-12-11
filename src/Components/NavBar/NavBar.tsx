@@ -15,7 +15,7 @@ import { AppContext } from "../AppContext";
 const Navbar = () => {
   const {logOut, user} = useContext(AppContext);
   console.log(user);
-  logOut()
+  // logOut() ?? 
   return (
     <NavbarContainer>
       {(!user && (
