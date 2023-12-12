@@ -14,7 +14,7 @@ export const ChatContainer = styled.div`
   display: grid;
   grid-template-columns: minmax(205px,20rem) minmax(30rem,100%);
   /* position: relative; */
-  /* height: 100rem; */
+  height: 75vh;
   max-height: 46rem;
   /* overflow: hidden; */
   overflow: none;
@@ -139,6 +139,12 @@ export const DefaultImg = styled.div`
 export const Text = styled.p`
   padding: 1rem 0 1rem 0;
 `;
+
+export const FormContainer = styled.form`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
 
 export const ChatInput = styled.input`
   background-color: #f2f2f2;

@@ -11,6 +11,7 @@ import {
   DefaultImg,
   Text,
   SideButton,
+  FormContainer,
 } from "@/Components/chatPage/ChatPageStyles";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -50,41 +51,10 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [celeb, setCeleb] = useState<Celeb>();
   const [celebList, setCelebList] = useState<List>([]);
-  const [chatMessages, setChatMessages] = useState([
-    {
-      role: "gpt",
-      message: "Gpt message1",
-    },
-    {
-      role: "user",
-      message:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
-    },
-    {
-      role: "user",
-      message:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
-    },
-    {
-      role: "user",
-      message:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
-    },
-    {
-      role: "user",
-      message:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
-    },
-
-    {
-      role: "gpt",
-      message:
-        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum est dignissimos eaque voluptatum placeat temporibus alias eius labore sequi perferendis eos nostrum tempore natus, impedit cupiditate quisquam maxime? Odit nihil culpa minima aliquam iure esse consequatur vitae est eaque. Est iste vel provident unde dignissimos accusantium, fugit repudiandae nesciunt distinctio sapiente perspiciatis quod beatae veritatis magnam officia dolorem possimus suscipit hic aliquam velit aspernatur, minima a mollitia! Quam maiores ducimus nihil nam quisquam quidem officia porro commodi est dicta blanditiis eveniet quia neque doloribus, non atque a quibusdam hic voluptate tempore totam. Nobis, laboriosam voluptatibus reprehenderit perferendis quasi earum sed",
-    },
-  ]);
+  const [chatMessages, setChatMessages] = useState<message[]>([]);
   const [sideButton, setSideButton] = useState(true);
 
-  const {authToken} = useContext(AppContext)
+  const { authToken } = useContext(AppContext);
   useEffect(() => {
     const getCeleb = async () => {
       try {
@@ -103,10 +73,33 @@ const Chat = () => {
           { headers: { Authorization: "Bearer " + authToken } }
         );
 
-        const allConvos:Conversation[] = allConversations.data
-        const currentConvoExist = allConvos.find((convo)=> convo.name == router.query.Name)
+        const allConvos: Conversation[] = allConversations.data;
+        console.log(allConvos);
+        const currentConvoExist = allConvos.find(
+          (convo) => convo.name == "router.query.Name"
+        );
+        console.log("currentConvoExist", currentConvoExist);
 
-        console.log('currentConvoExist',currentConvoExist);
+        if (currentConvoExist == undefined) {
+          const startConvo = await axios.get(
+            "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation",
+            {
+              headers: { Authorization: "Bearer " + authToken },
+              params: {
+                system_celeb:
+                  "You are " + router.query.Name + " and speak like them",
+                name: router.query.Name,
+              },
+            }
+          );
+
+          console.log("startConvo", startConvo);
+        } else {
+          setChatMessages(
+            currentConvoExist._cmessage_of_cconversation.reverse()
+          );
+        }
+
         setCelebList(allCelebList.data);
       } catch (error) {
         console.log(error);
@@ -124,6 +117,29 @@ const Chat = () => {
     setSideButton(!sideButton);
   };
 
+  const onSubmitChat = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    
+
+    try {
+      const continueConvo = await axios.get(
+        "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/continue_conversation",
+        {
+          headers: { Authorization: "Bearer " + authToken },
+          params: {
+            Cconversation_id: chatMessages[0].cconversation_id,
+            message: input,
+          },
+        }
+      );
+      console.log('continueConvo',continueConvo);
+      setChatMessages(oldMessages => [...oldMessages,continueConvo.data[0],continueConvo.data[1]])
+      console.log(chatMessages);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <ChatContainer>
       <SideBar sideButton={sideButton}>
@@ -144,29 +160,32 @@ const Chat = () => {
       <ChatBox>
         <ChatMessagesContainer>
           {chatMessages.map((chat) => {
-            if (chat.role == "gpt") {
+            if (chat.role == "assistant") {
               return (
                 <ChatMessages gpt={true}>
                   <SmallImg src={celeb?.Image} />
-                  <Text>{chat.message}</Text>
+                  <Text>{chat.content}</Text>
+                </ChatMessages>
+              );
+            } else if (chat.role == "user") {
+              return (
+                <ChatMessages gpt={false}>
+                  {" "}
+                  <Text>{chat.content}</Text>{" "}
+                  <DefaultImg>
+                    <Image objectFit="cover" alt="avatar" src={avatar} />{" "}
+                  </DefaultImg>
                 </ChatMessages>
               );
             }
-            return (
-              <ChatMessages gpt={false}>
-                {" "}
-                <Text>{chat.message}</Text>{" "}
-                <DefaultImg>
-                  <Image objectFit="cover" alt="avatar" src={avatar} />{" "}
-                </DefaultImg>
-              </ChatMessages>
-            );
           })}
         </ChatMessagesContainer>
-        <ChatInput
-          placeholder={"insert Message"}
-          value={input}
-          onChange={handleChange}></ChatInput>
+        <FormContainer onSubmit={onSubmitChat}>
+          <ChatInput
+            placeholder={"insert Message"}
+            value={input}
+            onChange={handleChange}></ChatInput>
+        </FormContainer>
       </ChatBox>
     </ChatContainer>
   );
