@@ -106,7 +106,7 @@ const Chat = () => {
       }
     };
 
-    getCeleb();
+    // getCeleb();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +134,8 @@ const Chat = () => {
         }
       );
       console.log('continueConvo',continueConvo);
-      setChatMessages(oldMessages => [...oldMessages,continueConvo.data[0],continueConvo.data[1]])
+      const UpdatedMessages = [continueConvo.data[1],continueConvo.data[0],...chatMessages]
+      setChatMessages(UpdatedMessages)
       console.log('chatMessages',chatMessages)
     } catch (error) {
       console.log(error);
