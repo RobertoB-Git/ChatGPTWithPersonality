@@ -1,18 +1,16 @@
 import styled, { StyledComponent } from "@emotion/styled";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
 
-
 interface ButtonProps {
-  sideButton: boolean
+  sideButton: boolean;
 }
 interface ChatMessages {
-  gpt: boolean
+  gpt: boolean;
 }
-
 
 export const ChatContainer = styled.div`
   display: grid;
-  grid-template-columns: minmax(205px,20rem) minmax(30rem,100%);
+  grid-template-columns: minmax(205px, 20rem) minmax(30rem, 100%);
   /* position: relative; */
   height: 75vh;
   max-height: 46rem;
@@ -22,7 +20,6 @@ export const ChatContainer = styled.div`
   @media (max-width: 685px) {
     display: block;
     max-height: none;
-
   }
 `;
 
@@ -38,7 +35,7 @@ export const SideBar = styled.div<ButtonProps>`
   @media (max-width: 685px) {
     position: fixed;
     height: 100%;
-    width: ${(props)=> (props.sideButton ? 0 : '20rem')};
+    width: ${(props) => (props.sideButton ? 0 : "20rem")};
     z-index: 1;
     top: 0;
     left: 0;
@@ -46,13 +43,11 @@ export const SideBar = styled.div<ButtonProps>`
     padding-top: 60px;
     text-align: right;
   }
-
 `;
-
 
 export const SideButton = styled.button<ButtonProps>`
   position: fixed;
-  left: ${(props)=> (props.sideButton ? 0 : '20rem')};
+  left: ${(props) => (props.sideButton ? 0 : "20rem")};
   width: 1rem;
   height: 5rem;
   background-color: black;
@@ -63,8 +58,7 @@ export const SideButton = styled.button<ButtonProps>`
   @media (min-width: 685px) {
     display: none;
   }
-
-`
+`;
 // export const SideBarContainer = styled.div`
 //   display: flex;
 //   flex-direction: column;
@@ -114,9 +108,9 @@ export const ChatMessagesContainer = styled.div`
 `;
 export const ChatMessages = styled.div<ChatMessages>`
   text-align: ${(props) => (props.gpt ? "left" : "right")};
-  background-color:  ${(props) => (props.gpt ? "#939393" : "#c5c5c5")};
+  background-color: ${(props) => (props.gpt ? "#939393" : "#c5c5c5")};
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: ${(props) => (props.gpt ? "left" : "right")};
   align-items: center;
   align-items: flex-start;
   gap: 1rem;
@@ -144,7 +138,7 @@ export const FormContainer = styled.form`
   display: flex;
   justify-content: center;
   width: 100%;
-`
+`;
 
 export const ChatInput = styled.input`
   background-color: #f2f2f2;
@@ -160,7 +154,4 @@ export const ChatInput = styled.input`
   width: 70%;
   height: 2rem;
   bottom: 0;
-  
-
- 
 `;

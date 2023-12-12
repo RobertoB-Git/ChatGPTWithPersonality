@@ -76,7 +76,7 @@ const Chat = () => {
         const allConvos: Conversation[] = allConversations.data;
         console.log(allConvos);
         const currentConvoExist = allConvos.find(
-          (convo) => convo.name == "router.query.Name"
+          (convo) => convo.name == router.query.Name
         );
         console.log("currentConvoExist", currentConvoExist);
 
@@ -87,7 +87,7 @@ const Chat = () => {
               headers: { Authorization: "Bearer " + authToken },
               params: {
                 system_celeb:
-                  "You are " + router.query.Name + " and speak like them",
+                  "You are impersonating " + router.query.Name + " and speak like them",
                 name: router.query.Name,
               },
             }
@@ -135,7 +135,7 @@ const Chat = () => {
       );
       console.log('continueConvo',continueConvo);
       setChatMessages(oldMessages => [...oldMessages,continueConvo.data[0],continueConvo.data[1]])
-      console.log(chatMessages);
+      console.log('chatMessages',chatMessages)
     } catch (error) {
       console.log(error);
     }
