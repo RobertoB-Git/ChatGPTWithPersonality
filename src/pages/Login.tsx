@@ -37,7 +37,7 @@ const LogIn = () => {
       );
 
       localStorage.setItem("authToken", response.data.authToken);
-
+      
       app.authUserWithToken(response.data.authToken);
 
       console.log(response.data);

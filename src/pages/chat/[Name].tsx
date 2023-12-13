@@ -45,62 +45,78 @@ interface Conversation {
   _cmessage_of_cconversation: message[];
 }
 
-const Chat = () => {
+const Chat = ({ allInfo }: { allInfo: LoadAll }) => {
   const router = useRouter();
-  console.log(router.query.Name);
+  const celebName = router.query.Name;
   const [input, setInput] = useState("");
   const [celeb, setCeleb] = useState<Celeb>();
-  const [celebList, setCelebList] = useState<List>([]);
+  const [celebList, setCelebList] = useState<Conversations[]>([]);
   const [chatMessages, setChatMessages] = useState<message[]>([]);
   const [sideButton, setSideButton] = useState(true);
 
   const { authToken } = useContext(AppContext);
   useEffect(() => {
+    if (authToken) {
+      setChatMessages(
+        allInfo.CurrentConvo[0]._cmessage_of_cconversation.reverse()
+      );
+      const currentCeleb:Conversations = allInfo.AllConvos.find(currentCeleb => currentCeleb.name == celebName)!
+      setCeleb(currentCeleb.CelebInfo)
+      setCelebList(allInfo.AllConvos)
+    }
+
     const getCeleb = async () => {
       try {
-        const res = await axios.get(
-          "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs/" +
-            router.query.Name
-        );
-        console.log(res.data);
-        setCeleb(res.data);
-
-        const allCelebList = await axios.get(
-          `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs`
-        );
-        const allConversations = await axios.get(
-          `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/cconversation`,
-          { headers: { Authorization: "Bearer " + authToken } }
-        );
-
-        const allConvos: Conversation[] = allConversations.data;
-        console.log(allConvos);
-        const currentConvoExist = allConvos.find(
-          (convo) => convo.name == router.query.Name
-        );
-        console.log("currentConvoExist", currentConvoExist);
-
-        if (currentConvoExist == undefined) {
-          const startConvo = await axios.get(
-            "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation",
-            {
-              headers: { Authorization: "Bearer " + authToken },
-              params: {
-                system_celeb:
-                  "You are impersonating " + router.query.Name + " and speak like them",
-                name: router.query.Name,
-              },
-            }
-          );
-
-          console.log("startConvo", startConvo);
-        } else {
-          setChatMessages(
-            currentConvoExist._cmessage_of_cconversation.reverse()
-          );
-        }
-
-        setCelebList(allCelebList.data);
+        //   const res = await axios.get(
+        //     "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs/" +
+        //       router.query.Name
+        //   );
+        //   console.log(res.data);
+        //   setCeleb(res.data);
+        //   const allCelebList = await axios.get(
+        //     `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs`
+        //   );
+        //   const allConversations = await axios.get(
+        //     `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/cconversation`,
+        //     { headers: { Authorization: "Bearer " + authToken } }
+        //   );
+        //   const allConvos: Conversation[] = allConversations.data;
+        //   console.log(allConvos);
+        //   const currentConvoExist = allConvos.find(
+        //     (convo) => convo.name == router.query.Name
+        //   );
+        //   console.log("currentConvoExist", currentConvoExist);
+        //   if (currentConvoExist == undefined) {
+        //     const startConvo = await axios.get(
+        //       "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation",
+        //       {
+        //         headers: { Authorization: "Bearer " + authToken },
+        //         params: {
+        //           system_celeb:
+        //             "You are impersonating " +
+        //             router.query.Name +
+        //             " and speak like them",
+        //           name: router.query.Name,
+        //         },
+        //       }
+        //     );
+        //     console.log("startConvo", startConvo);
+        //   } else {
+        //     setChatMessages(
+        //       currentConvoExist._cmessage_of_cconversation.reverse()
+        //     );
+        //   }
+        //   setCelebList(allCelebList.data);
+        // const response = await axios.get(
+        //         `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/LoadallConvosandCelebs`,
+        //         {
+        //           headers: { Authorization: "Bearer " + authToken },
+        //           params: {
+        //             name: router.query.Name,
+        //           },
+        //         }
+        //       );
+        // console.log('response.data',response);
       } catch (error) {
         console.log(error);
       }
@@ -120,8 +136,6 @@ const Chat = () => {
   const onSubmitChat = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    
-
     try {
       const continueConvo = await axios.get(
         "https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/continue_conversation",
@@ -133,10 +147,14 @@ const Chat = () => {
           },
         }
       );
-      console.log('continueConvo',continueConvo);
-      const UpdatedMessages = [continueConvo.data[1],continueConvo.data[0],...chatMessages]
-      setChatMessages(UpdatedMessages)
-      console.log('chatMessages',chatMessages)
+      console.log("continueConvo", continueConvo);
+      const UpdatedMessages = [
+        continueConvo.data[1],
+        continueConvo.data[0],
+        ...chatMessages,
+      ];
+      setChatMessages(UpdatedMessages);
+      console.log("chatMessages", chatMessages);
     } catch (error) {
       console.log(error);
     }
@@ -152,8 +170,8 @@ const Chat = () => {
         {celebList.map((celeb) => {
           return (
             <SideBarItems>
-              <SmallImg src={celeb.Image}></SmallImg>
-              {celeb.Name}
+              <SmallImg src={celeb.CelebInfo.Image}></SmallImg>
+              {celeb.CelebInfo.Name}
             </SideBarItems>
           );
         })}
@@ -193,3 +211,62 @@ const Chat = () => {
 };
 
 export default Chat;
+
+interface Conversations {
+  id: number;
+  created_at: number;
+  name: string;
+  model: string;
+  cusers_id: number;
+  ccelebs_id: number;
+  CelebInfo: {
+    id: number;
+    created_at: number;
+    Name: string;
+    Image: string;
+  };
+}
+
+interface ConversationError {
+  code: string;
+  message: string;
+}
+
+interface LoadAll {
+  AllConvos: Conversations[];
+  CurrentConvo: Conversation[];
+}
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+
+  const { authToken } = useContext(AppContext);
+  const router = useRouter();
+  const celebName = router.query.Name;
+
+  if (authToken) {
+    // load all convos from user
+    const response = await axios.get(
+      `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/LoadallConvosandCelebs`,
+      {
+        headers: { Authorization: "Bearer " + authToken },
+        params: {
+          name: celebName,
+        },
+      }
+    );
+
+    const allInfo: LoadAll = response.data;
+    return { props: { allInfo } };
+  } else {
+    const response = await axios.get(
+      `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs`
+    );
+    const userChats = response.data;
+
+    return { props: { userChats } };
+  }
+
+  // Pass data to the page via props
+}
