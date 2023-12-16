@@ -6,19 +6,30 @@ import {
   AccountInputTitle,
 } from "../Components/LoginRegisterStyles/AccountStyles";
 import { useContext, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { AppContext } from "@/Components/AppContext";
 import { redirect, useRouter } from "next/navigation";
+import Error from "@/Components/Error";
 
 interface Account {
   email: string;
   password: string;
 }
 
+interface ErrorAxios {
+  errorMessage: string;
+  errorPresent: boolean;
+}
+
 const LogIn = () => {
   const [accountInfo, setAccountInfo] = useState<Account>({
     email: "",
     password: "",
+  });
+
+  const [error, setError] = useState<ErrorAxios>({
+    errorMessage: "",
+    errorPresent: false,
   });
 
   const router = useRouter();
@@ -44,13 +55,22 @@ const LogIn = () => {
       router.push("/");
     } catch (error) {
       console.log(error);
+      const err = error as AxiosError;
+
+      setError({ errorMessage: err.message, errorPresent: true });
     }
 
     // redirect("/register");
   };
-
+  const disableError = () => {
+    setError({ errorMessage: "", errorPresent: false });
+  };
   return (
+    
     <AccountContainer>
+      {error.errorPresent && (
+      <Error error={error.errorMessage} disable={disableError}></Error>
+    )}
       <AccountForm onSubmit={submit}>
         <AccountInputTitle>Email</AccountInputTitle>
         <AccountInput
