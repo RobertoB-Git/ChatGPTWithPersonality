@@ -16,7 +16,7 @@ const CelebList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: gray;
+  background-color: #c2c2c2;
   left: 35.6%;
   top: 4rem;
   z-index: 10;
