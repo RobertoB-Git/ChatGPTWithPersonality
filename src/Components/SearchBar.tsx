@@ -17,13 +17,14 @@ const CelebList = styled.div`
   flex-direction: column;
   gap: 1rem;
   background-color: #c2c2c2;
-  left: 35.6%;
+  left: 50%;
   top: 4rem;
   z-index: 10;
-  width: 40vw;
+  width: 25vw;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  /* transform: translate(-50%, -50%); */
+  transform: translate(-50%);
+  min-width: 15rem;
 `;
 
 export const ListItems = styled.div`

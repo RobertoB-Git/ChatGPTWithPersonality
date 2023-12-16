@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Button } from "./Button";
 import Image from "next/image";
 import TempImg from "../../public/mega-hits-drake-1920x10801782004c_vertical.jpg";
+import Link from "next/link";
 
 const BannerContainer = styled.div`
   position: relative;
@@ -49,10 +50,10 @@ const Banner = () => {
     <BannerContainer>
       <Image src={TempImg} alt="celeb"></Image>
       <BannerInfoContainer>
-        <BannerTitle>Latest Celev</BannerTitle>
+        <BannerTitle>Latest Celeb</BannerTitle>
         <BannerInfo>Chat with our latest addition to our roster</BannerInfo>
       </BannerInfoContainer>
-      <BannerButton>Chat</BannerButton>
+      <Link href={"/chat/Drake"}><BannerButton>Chat</BannerButton></Link>
     </BannerContainer>
   );
 };

@@ -6,16 +6,17 @@ import {
   NavbarMenu,
 } from "./NavBarStyles";
 import SearchBar from "../SearchBar";
-import Icon from "../../../public/ChatGPT-Logo.png";
+import Icon from "../../../public/celebchat-high-resolution-logo.png";
+import Icon2 from "../../../public/celebchat-high-resolution-logo-transparent.svg";
 import Lupa from "../../../public/zoom-svgrepo-com.svg";
 import Image from "next/image";
 import { useContext } from "react";
 import { AppContext } from "../AppContext";
 
 const Navbar = () => {
-  const {logOut, user} = useContext(AppContext);
+  const { logOut, user } = useContext(AppContext);
   console.log(user);
-  // logOut() ?? 
+  // logOut() ??
   return (
     <NavbarContainer>
       {(!user && (
@@ -39,8 +40,9 @@ const Navbar = () => {
         <Image src={Lupa} alt="Search" />
         <SearchBar />
       </FlexDiv>
-      <Link href={"/"}>
-        <NavBarIcon src={Icon.src}></NavBarIcon>
+      <Link href={"/"} style={{height: "70%",padding:"1rem"}}>
+        {/* <NavBarIcon src={Icon.src}></NavBarIcon> */}
+        <Image width={70} height={70} src={Icon2.src} alt="logo" />
       </Link>
     </NavbarContainer>
   );
