@@ -76,8 +76,8 @@ const Chat = () => {
 
   useEffect(() => {
     const getCeleb = async () => {
-      console.log("test", authToken);
-      console.log();
+      // console.log("test", authToken);
+      // console.log();
       try {
         if (authToken) {
           // load all convos from user
@@ -92,11 +92,11 @@ const Chat = () => {
           );
 
           const allInfo: LoadAll = response.data;
-          console.log("allInfo", allInfo);
+          // console.log("allInfo", allInfo);
           if (allInfo.CurrentConvo.length == 0) {
             // no current convo will start a new one
             //   "system_celeb": "you are impersonating Drake and speak like them"
-            console.log("test", authToken);
+            // console.log("test", authToken);
             const response = await axios.get(
               `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation`,
               {
@@ -113,9 +113,9 @@ const Chat = () => {
             setChatMessages(chat);
             setCeleb(celeb.CelebInfo);
             setCelebList([celeb]);
-            console.log(response.data);
+            // console.log(response.data);
           } else if (allInfo.CurrentConvo.length != 0) {
-            console.log("tes2t", authToken);
+            // console.log("tes2t", authToken);
             setChatMessages(
               allInfo.CurrentConvo[0]._cmessage_of_cconversation.reverse()
             );
@@ -129,7 +129,7 @@ const Chat = () => {
           //   allInfo.CurrentConvo[0]._cmessage_of_cconversation.reverse()
           // );
         } else {
-          console.log("else", authToken);
+          // console.log("else", authToken);
           const response = await axios.get(
             `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation_noauth`,
             {
@@ -144,9 +144,9 @@ const Chat = () => {
           setChatMessages([demoInfo.message]);
           setCeleb(demoInfo.celeb);
         }
-        console.log("end");
+        // console.log("end");
       } catch (error) {
-        console.log("error", error);
+        // console.log("error", error);
         const err = error as AxiosError;
 
         setError({ errorMessage: err.message, errorPresent: true });
@@ -178,16 +178,16 @@ const Chat = () => {
           },
         }
       );
-      console.log("continueConvo", continueConvo);
+      // console.log("continueConvo", continueConvo);
       const UpdatedMessages = [
         continueConvo.data[1],
         continueConvo.data[0],
         ...chatMessages,
       ];
       setChatMessages(UpdatedMessages);
-      console.log("chatMessages", chatMessages);
+      // console.log("chatMessages", chatMessages);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const err = error as AxiosError;
 
       setError({ errorMessage: err.message, errorPresent: true });
@@ -209,7 +209,10 @@ const Chat = () => {
         </SideButton>
         {celebList.map((celeb) => {
           return (
-            <Link key={celeb.name} href={`/chat/${celebName}`} style={{ width: "90%" }}>
+            <Link
+              key={celeb.name}
+              href={`/chat/${celebName}`}
+              style={{ width: "90%" }}>
               <SideBarItems>
                 <SmallImg src={celeb.CelebInfo.Image}></SmallImg>
                 {celeb.CelebInfo.Name}
@@ -230,7 +233,7 @@ const Chat = () => {
               );
             } else if (chat.role == "user") {
               return (
-                <ChatMessages key={chat.id}gpt={false}>
+                <ChatMessages key={chat.id} gpt={false}>
                   {" "}
                   <Text>{chat.content}</Text>{" "}
                   <DefaultImg>

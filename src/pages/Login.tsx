@@ -48,13 +48,15 @@ const LogIn = () => {
       );
 
       localStorage.setItem("authToken", response.data.authToken);
-      document.cookie = `authToken=${response.data.authToken}; expires=` + new Date(2023,12,17).toUTCString() // cant use in get servide props
+      document.cookie =
+        `authToken=${response.data.authToken}; expires=` +
+        new Date(2023, 12, 17).toUTCString(); // cant use in get servide props
       app.authUserWithToken(response.data.authToken);
 
-      console.log(response.data);
+      // console.log(response.data);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const err = error as AxiosError;
 
       setError({ errorMessage: err.message, errorPresent: true });
@@ -66,11 +68,10 @@ const LogIn = () => {
     setError({ errorMessage: "", errorPresent: false });
   };
   return (
-    
     <AccountContainer>
       {error.errorPresent && (
-      <Error error={error.errorMessage} disable={disableError}></Error>
-    )}
+        <Error error={error.errorMessage} disable={disableError}></Error>
+      )}
       <AccountForm onSubmit={submit}>
         <AccountInputTitle>Email</AccountInputTitle>
         <AccountInput

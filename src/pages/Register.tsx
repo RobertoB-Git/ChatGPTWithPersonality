@@ -21,7 +21,6 @@ interface ErrorAxios {
   errorPresent: boolean;
 }
 
-
 const Register = () => {
   const [accountInfo, setAccountInfo] = useState<Account>({
     email: "",
@@ -35,7 +34,7 @@ const Register = () => {
 
   const router = useRouter();
   const app = useContext(AppContext);
-  console.log(app.user);
+  // console.log(app.user);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccountInfo((prev) => ({ ...prev, [e.target.type]: e.target.value }));
@@ -51,10 +50,10 @@ const Register = () => {
       localStorage.setItem("authToken", response.data.authToken);
       app.authUserWithToken(response.data.authToken);
 
-      console.log(response.data);
+      // console.log(response.data);
       router.push("/");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       const err = error as AxiosError;
 
       setError({ errorMessage: err.message, errorPresent: true });
@@ -66,8 +65,8 @@ const Register = () => {
   return (
     <AccountContainer>
       {error.errorPresent && (
-      <Error error={error.errorMessage} disable={disableError}></Error>
-    )}
+        <Error error={error.errorMessage} disable={disableError}></Error>
+      )}
       <AccountForm onSubmit={submit}>
         <AccountInputTitle>Email</AccountInputTitle>
         <AccountInput

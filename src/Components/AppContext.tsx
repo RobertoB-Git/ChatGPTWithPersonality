@@ -32,17 +32,17 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       );
       setUser(responseLogin.data);
       setAuthToken(token);
-      document.cookie = `authToken=${token}; expires=` + new Date(2023,12,15).toUTCString() 
-
+      document.cookie =
+        `authToken=${token}; expires=` + new Date(2023, 12, 15).toUTCString();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const logOut = () => {
     localStorage.clear();
     setUser(null);
-    setAuthToken(null)
+    setAuthToken(null);
   };
 
   useEffect(() => {

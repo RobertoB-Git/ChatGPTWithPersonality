@@ -15,7 +15,7 @@ import { AppContext } from "../AppContext";
 
 const Navbar = () => {
   const { logOut, user } = useContext(AppContext);
-  console.log(user);
+  // console.log(user);
   // logOut() ??
   return (
     <NavbarContainer>
@@ -40,7 +40,7 @@ const Navbar = () => {
         <Image src={Lupa} alt="Search" />
         <SearchBar />
       </FlexDiv>
-      <Link href={"/"} style={{height: "70%",padding:"1rem"}}>
+      <Link href={"/"} style={{ height: "70%", padding: "1rem" }}>
         {/* <NavBarIcon src={Icon.src}></NavBarIcon> */}
         <Image width={70} height={70} src={Icon2.src} alt="logo" />
       </Link>
