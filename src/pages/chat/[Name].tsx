@@ -202,7 +202,7 @@ const Chat = () => {
         <Error error={error.errorMessage} disable={disableError}></Error>
       )}
       <SideBar sideButton={sideButton}>
-        <SideBarTitle>Celeb List</SideBarTitle>
+        <SideBarTitle>Previous Chats</SideBarTitle>
 
         <SideButton sideButton={sideButton} onClick={handleSideBarButton}>
           {sideButton ? ">" : "<"}
