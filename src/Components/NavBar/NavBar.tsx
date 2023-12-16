@@ -45,7 +45,7 @@ const Navbar = () => {
         </FlexDiv2>
       )}
 
-      <PhoneMenu >
+      <PhoneMenu>
         <Image
           width={30}
           height={30}

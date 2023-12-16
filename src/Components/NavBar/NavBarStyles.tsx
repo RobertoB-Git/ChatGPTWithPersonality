@@ -16,7 +16,7 @@ export const NavbarContainer = styled.nav`
   a {
     font-weight: bold;
     text-align: center;
-    display: none;
+    
 
   }
 `;
