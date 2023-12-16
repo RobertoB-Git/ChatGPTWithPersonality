@@ -55,6 +55,9 @@ const Register = () => {
       router.push("/");
     } catch (error) {
       console.log(error);
+      const err = error as AxiosError;
+
+      setError({ errorMessage: err.message, errorPresent: true });
     }
   };
   const disableError = () => {
