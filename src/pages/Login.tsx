@@ -37,7 +37,7 @@ const LogIn = () => {
       );
 
       localStorage.setItem("authToken", response.data.authToken);
-      
+      document.cookie = `authToken=${response.data.authToken}; expires=` + new Date(2023,12,17).toUTCString() // cant use in get servide props
       app.authUserWithToken(response.data.authToken);
 
       console.log(response.data);
