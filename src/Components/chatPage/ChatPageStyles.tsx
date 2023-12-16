@@ -20,6 +20,7 @@ export const ChatContainer = styled.div`
   @media (max-width: 685px) {
     display: block;
     max-height: none;
+    
   }
 `;
 
@@ -42,6 +43,7 @@ export const SideBar = styled.div<ButtonProps>`
     overflow-x: hidden;
     padding-top: 60px;
     text-align: right;
+    
   }
 `;
 
@@ -89,6 +91,7 @@ export const ChatBox = styled.div`
   flex-direction: column;
   align-items: center;
   max-height: 46rem;
+  height: 100%;
 `;
 export const ChatMessagesContainer = styled.div`
   display: flex;

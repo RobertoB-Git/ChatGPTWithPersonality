@@ -13,13 +13,14 @@ import {
   SideButton,
   FormContainer,
 } from "@/Components/chatPage/ChatPageStyles";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import avatar from "../../../public/avatar.png";
 import Image from "next/image";
 import { AppContext } from "@/Components/AppContext";
 import Link from "next/link";
+import Error from "@/Components/Error";
 
 interface Celeb {
   id: number;
@@ -30,12 +31,12 @@ interface Celeb {
 type List = Celeb[];
 
 interface message {
-  id: number;
-  created_at: number;
+  id?: number;
+  created_at?: number;
   role: string;
   content: string;
-  index: number;
-  cconversation_id: number;
+  index?: number;
+  cconversation_id?: number;
 }
 
 interface Conversation {
@@ -47,6 +48,18 @@ interface Conversation {
   _cmessage_of_cconversation: message[];
 }
 
+interface Demo {
+  message: {
+    role: string;
+    content: string;
+  };
+  celeb: Celeb;
+}
+
+interface ErrorAxios {
+  errorMessage: string;
+  errorPresent: boolean;
+}
 const Chat = () => {
   const router = useRouter();
   const celebName = router.query.Name;
@@ -55,12 +68,16 @@ const Chat = () => {
   const [celebList, setCelebList] = useState<Conversations[]>([]);
   const [chatMessages, setChatMessages] = useState<message[]>([]);
   const [sideButton, setSideButton] = useState(true);
-
+  const [error, setError] = useState<ErrorAxios>({
+    errorMessage: "",
+    errorPresent: false,
+  });
   const { authToken } = useContext(AppContext);
 
   useEffect(() => {
     const getCeleb = async () => {
-      console.log("test");
+      console.log("test", authToken);
+      console.log();
       try {
         if (authToken) {
           // load all convos from user
@@ -79,7 +96,7 @@ const Chat = () => {
           if (allInfo.CurrentConvo.length == 0) {
             // no current convo will start a new one
             //   "system_celeb": "you are impersonating Drake and speak like them"
-
+            console.log("test", authToken);
             const response = await axios.get(
               `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation`,
               {
@@ -98,6 +115,7 @@ const Chat = () => {
             setCelebList([celeb]);
             console.log(response.data);
           } else if (allInfo.CurrentConvo.length != 0) {
+            console.log("tes2t", authToken);
             setChatMessages(
               allInfo.CurrentConvo[0]._cmessage_of_cconversation.reverse()
             );
@@ -112,14 +130,26 @@ const Chat = () => {
           // );
         } else {
           console.log("else", authToken);
-          // const response = await axios.get(
-          //   `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/ccelebs`
-          // );
-          // const userChats = response.data;
+          const response = await axios.get(
+            `https://x8ki-letl-twmt.n7.xano.io/api:mxGtNEgl/start_conversation_noauth`,
+            {
+              params: {
+                name: celebName,
+                system_celeb: "you are impersonating " + celebName,
+              },
+            }
+          );
+
+          const demoInfo: Demo = response.data;
+          setChatMessages([demoInfo.message]);
+          setCeleb(demoInfo.celeb);
         }
         console.log("end");
       } catch (error) {
         console.log("error", error);
+        const err = error as AxiosError;
+
+        setError({ errorMessage: err.message, errorPresent: true });
       }
     };
 
@@ -158,10 +188,19 @@ const Chat = () => {
       console.log("chatMessages", chatMessages);
     } catch (error) {
       console.log(error);
+      const err = error as AxiosError;
+
+      setError({ errorMessage: err.message, errorPresent: true });
     }
+  };
+  const disableError = () => {
+    setError({ errorMessage: "", errorPresent: false });
   };
   return (
     <ChatContainer>
+      {error.errorPresent && (
+        <Error error={error.errorMessage} disable={disableError}></Error>
+      )}
       <SideBar sideButton={sideButton}>
         <SideBarTitle>Celeb List</SideBarTitle>
 
@@ -170,13 +209,11 @@ const Chat = () => {
         </SideButton>
         {celebList.map((celeb) => {
           return (
-            <Link href={`/chat/${celebName}`} style={{width: "90%"}}>
-            <SideBarItems>
-              
-              <SmallImg src={celeb.CelebInfo.Image}></SmallImg>
-              {celeb.CelebInfo.Name}
-              
-            </SideBarItems>
+            <Link href={`/chat/${celebName}`} style={{ width: "90%" }}>
+              <SideBarItems>
+                <SmallImg src={celeb.CelebInfo.Image}></SmallImg>
+                {celeb.CelebInfo.Name}
+              </SideBarItems>
             </Link>
           );
         })}
@@ -206,9 +243,11 @@ const Chat = () => {
         </ChatMessagesContainer>
         <FormContainer onSubmit={onSubmitChat}>
           <ChatInput
-            placeholder={"insert Message"}
+            // insert Message
+            placeholder={authToken ? "insert Message" : "Log in to continue"}
             value={input}
-            onChange={handleChange}></ChatInput>
+            onChange={handleChange}
+            readOnly={authToken ? false : true}></ChatInput>
         </FormContainer>
       </ChatBox>
     </ChatContainer>
