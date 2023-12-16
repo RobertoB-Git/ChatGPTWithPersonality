@@ -91,7 +91,7 @@ const SearchBar = () => {
         {filterCelebs.length >=1 && <CelebList>
           {filterCelebs.map((celeb) => {
             return (
-              <Link href={`/chat/${celeb.Name}`} style={{ width: "90%" }}>
+              <Link key={celeb.Name} href={`/chat/${celeb.Name}`} style={{ width: "90%" }}>
 
               <ListItems>
                 <SmallImg src={celeb.Image}></SmallImg>

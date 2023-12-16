@@ -209,7 +209,7 @@ const Chat = () => {
         </SideButton>
         {celebList.map((celeb) => {
           return (
-            <Link href={`/chat/${celebName}`} style={{ width: "90%" }}>
+            <Link key={celeb.name} href={`/chat/${celebName}`} style={{ width: "90%" }}>
               <SideBarItems>
                 <SmallImg src={celeb.CelebInfo.Image}></SmallImg>
                 {celeb.CelebInfo.Name}
@@ -223,14 +223,14 @@ const Chat = () => {
           {chatMessages.map((chat) => {
             if (chat.role == "assistant") {
               return (
-                <ChatMessages gpt={true}>
+                <ChatMessages key={chat.id} gpt={true}>
                   <SmallImg src={celeb?.Image} />
                   <Text>{chat.content}</Text>
                 </ChatMessages>
               );
             } else if (chat.role == "user") {
               return (
-                <ChatMessages gpt={false}>
+                <ChatMessages key={chat.id}gpt={false}>
                   {" "}
                   <Text>{chat.content}</Text>{" "}
                   <DefaultImg>
